@@ -1,6 +1,9 @@
 package hps.nyu.fa14;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -10,13 +13,13 @@ import java.util.List;
 public class Formula {
 
 	
-	final List<List<Integer>> clauses;
+	public final List<List<Integer>> clauses;
 	
-	Formula(){
+	public Formula(){
 		clauses = new ArrayList<List<Integer>>();
 	}
 	
-	int maxLiteral(){
+	public int maxLiteral(){
 		int max = Integer.MIN_VALUE;
 		for(List<Integer> c : clauses){
 			for(int lit : c){
@@ -26,7 +29,7 @@ public class Formula {
 		return max;
 	}
 	
-	int clauseCount(){
+	public int clauseCount(){
 		return clauses.size();
 	}
 	
@@ -36,7 +39,7 @@ public class Formula {
 	 * @param a
 	 * @return
 	 */
-	boolean isSatisfied(Assignment a){
+	public boolean isSatisfied(Assignment a){
 		// If every clause is satisfied then the whole formula is satisfied
 		return numClausesSatisfied(a) == clauses.size();
 	}
@@ -47,7 +50,7 @@ public class Formula {
 	 * @param a
 	 * @return
 	 */
-	int numClausesSatisfied(Assignment a){
+	public int numClausesSatisfied(Assignment a){
 		int count = 0;
 		// Iterate over the clauses and see if it is satisfied
 		for(List<Integer> c : clauses){
@@ -64,7 +67,18 @@ public class Formula {
 		return count;
 	}
 	
-	static Formula parse(InputStream input) throws IOException{
+	/**
+	 * Just a convenience method
+	 * @param path
+	 * @return
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 */
+	public static Formula parseFile(String path) throws FileNotFoundException, IOException{
+		return Formula.parse(new FileInputStream(new File(path)));	
+	}
+	
+	public static Formula parse(InputStream input) throws IOException{
 		Formula f = new Formula();
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(input));

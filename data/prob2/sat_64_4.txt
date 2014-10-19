@@ -1,5 +1,4 @@
 c A SAT instance generated from a 3-CNF formula that had 900 clauses and 64 variables
-Exactly-1
 p cnf 64 900
 -4 41 3 0
 1 -7 -47 0

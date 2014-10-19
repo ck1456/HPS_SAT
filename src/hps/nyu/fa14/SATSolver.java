@@ -1,17 +1,20 @@
 package hps.nyu.fa14;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import solver.ISolver;
+import solver.RandomSolver;
 
 public class SATSolver {
 
 	static Assignment solve(Formula f) {
 		// TODO: Implement something much smarter here
+		ISolver solver = new RandomSolver();
 
-		return Assignment.random(f.maxLiteral());
+		return solver.solve(f);
 	}
 
 	public static void main(String[] args) throws FileNotFoundException,
@@ -24,7 +27,7 @@ public class SATSolver {
 		String inputFile = args[0];
 		String outputFile = args[1];
 
-		Formula f = Formula.parse(new FileInputStream(new File(inputFile)));
+		Formula f = Formula.parseFile(inputFile);
 		Assignment a = solve(f);
 
 		// Make directory for the output file if it does not exist

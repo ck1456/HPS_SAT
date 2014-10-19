@@ -11,15 +11,15 @@ public class Assignment {
 	/**
 	 * There is no index zero literal, so this is just ignored, but the array is actually one larger than strictly necessary
 	 */
-	final boolean[] values;
+	public final boolean[] values;
 
-	Assignment(int literalCount) {
+	public Assignment(int literalCount) {
 		values = new boolean[literalCount + 1];
 	}
 	
 	private static final Random RAND = new Random();
 	
-	static Assignment random(int literalCount){
+	public static Assignment random(int literalCount){
 		Assignment a = new Assignment(literalCount);
 		for(int i = 1; i < a.values.length; i++){
 			a.values[i] = RAND.nextBoolean();
@@ -32,7 +32,7 @@ public class Assignment {
 	 * @param literalCount
 	 * @return
 	 */
-	static Assignment allSet(int literalCount, boolean value){
+	public static Assignment allSet(int literalCount, boolean value){
 		Assignment a = new Assignment(literalCount);
 		for(int i = 1; i < a.values.length; i++){
 			a.values[i] = value;
@@ -40,7 +40,7 @@ public class Assignment {
 		return a;
 	}
 	
-	void write(OutputStream output) throws IOException{
+	public void write(OutputStream output) throws IOException{
 		
 		StringBuilder sb = new StringBuilder();
 		// There is no 0 literal

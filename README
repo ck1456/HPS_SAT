@@ -1,0 +1,22 @@
+Satisifiability Challenge
+Heuristic Problem Solving - Fall 2014
+
+Submitted by:  DataPlayers
+  Chris Keitel (ck1456@nyu.edu)
+  Kumar Prabhu (kumar.prabhu@nyu.edu)
+
+The attached zip file contains all of the source and compiled code to produce solutions
+
+Copy the zip file to an energon machine and unzip:
+> unzip SATSolver.zip
+> cd SATSolver
+
+The SATSolver.jar in this directory is the tool used to generate solutions.
+You can invoke it with two command line arguments <input> <output>:
+> java -jar SATSolver.jar sat_8_0.txt sat_8_0_soln.txt
+
+If necessary you can rebuild the jar file by using the included ant build script:
+> ant clean
+> ant
+
+Other Helpful Hints:
