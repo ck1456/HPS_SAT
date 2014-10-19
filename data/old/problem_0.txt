@@ -1,0 +1,1 @@
+(x0 V x2 V x3) ^ (x6 V x1 V x7) ^ ( x4 V x5 V ~x1 )

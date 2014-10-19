@@ -1,0 +1,42 @@
+<project name="SATSolver" basedir="." default="package">
+
+	<property name="src.dir" value="src" />
+	<property name="build.dir" value="bin" />
+	<property name="dist.dir" value="dist" />
+	<property name="project.home" location="." />
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<delete dir="${dist.dir}" />
+	</target>
+
+	<target name="compile">
+		<mkdir dir="${build.dir}" />
+		<javac srcdir="${src.dir}" destdir="${build.dir}" compiler="modern" fork="true" includeantruntime="false" />
+	</target>
+
+	<target name="createjar" depends="compile">
+		<jar destfile="${project.home}/SATSolver" baseDir="${project.home}/bin">
+			<manifest>
+				<attribute name="Main-Class" value="hps.nyu.fa14.SATSolver" />
+			</manifest>
+		</jar>
+	</target>
+
+	<property name="zip.name" value="SATSolver" />
+	<target name="package" depends="createjar">
+		<echo>Zipping...</echo>
+		<mkdir dir="${dist.dir}" />
+		<zip destfile="${dist.dir}/${zip.name}.zip">
+			<zipfileset dir="." includes="SATSolver.jar" prefix="${zip.name}" />
+			<zipfileset dir="." includes="build.xml" prefix="${zip.name}" />
+			<zipfileset dir="." includes="test_and_score*.sh" prefix="${zip.name}" />
+			<zipfileset dir="." includes="README" prefix="${zip.name}" />
+			<zipfileset dir="src" includes="**/*.java" prefix="${zip.name}/src" />
+			<zipfileset dir="data" includes="*.txt" prefix="${zip.name}/data" />
+			<zipfileset dir="spec" includes="*.jar" prefix="${zip.name}/spec" />
+			<!--<zipfileset dir="testsrc" includes="**/*.java" prefix="${zip.name}/testsrc" />-->
+		</zip>
+	</target>
+
+</project>
