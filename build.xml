@@ -16,7 +16,7 @@
 	</target>
 
 	<target name="createjar" depends="compile">
-		<jar destfile="${project.home}/SATSolver" baseDir="${project.home}/bin">
+		<jar destfile="${project.home}/SATSolver.jar" baseDir="${project.home}/bin">
 			<manifest>
 				<attribute name="Main-Class" value="hps.nyu.fa14.SATSolver" />
 			</manifest>
