@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.junit.Test;
 
@@ -57,5 +59,45 @@ public class FormulaTest {
 		a.values[1] = true;
 		assertFalse(f.isSatisfied(a));
 		assertEquals(16, f.numClausesSatisfied(a));
+	}
+	
+	@Test
+	public void testCountExactly1Clauses() throws Exception {
+		Formula f = new Formula();
+		f.ExactSatisifiabilityConstraint = 1;
+		f.clauses.add(new ArrayList<Integer>(Arrays.asList(1, -2, -3)));
+		f.clauses.add(new ArrayList<Integer>(Arrays.asList(-1, -2, 4)));
+		
+		Assignment a = new Assignment(f.maxLiteral());
+		a.values[1] = true;
+		assertEquals(1, f.numClausesSatisfied(a));
+		a.values[2] = true;
+		assertEquals(0, f.numClausesSatisfied(a));
+		a.values[3] = true;
+		assertEquals(1, f.numClausesSatisfied(a));
+		a.values[4] = true;
+		assertEquals(2, f.numClausesSatisfied(a));
+		assertTrue(f.isSatisfied(a));
+	}
+	
+	@Test
+	public void testCountExactly2Clauses() throws Exception {
+		Formula f = new Formula();
+		f.ExactSatisifiabilityConstraint = 2;
+		f.clauses.add(new ArrayList<Integer>(Arrays.asList(1, -2, -3)));
+		f.clauses.add(new ArrayList<Integer>(Arrays.asList(-1, -2, 4)));
+		
+		Assignment a = new Assignment(f.maxLiteral());
+		a.values[1] = true;
+		assertEquals(0, f.numClausesSatisfied(a));
+		a.values[2] = true;
+		assertEquals(1, f.numClausesSatisfied(a));
+		a.values[3] = true;
+		assertEquals(0, f.numClausesSatisfied(a));
+		a.values[4] = true;
+		assertEquals(0, f.numClausesSatisfied(a));
+		a.values[2] = false;
+		assertEquals(2, f.numClausesSatisfied(a));
+		assertTrue(f.isSatisfied(a));
 	}
 }
