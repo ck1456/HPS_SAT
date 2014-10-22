@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class ConstrainedProblemSolver implements ISolver {
+public class ConstrainedProblemSolver extends AbstractSolver {
 
   int populationSize = 50;
   int generations = 100;

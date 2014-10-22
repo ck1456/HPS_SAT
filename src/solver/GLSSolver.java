@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class GLSSolver implements ISolver {
+public class GLSSolver extends AbstractSolver {
 
   int populationSize = 50;
   int generations = 50;

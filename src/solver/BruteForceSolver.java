@@ -3,7 +3,7 @@ package solver;
 import hps.nyu.fa14.Assignment;
 import hps.nyu.fa14.Formula;
 
-public class BruteForceSolver implements ISolver {
+public class BruteForceSolver extends AbstractSolver {
 
   @Override
   public Assignment solve(Formula f) {
