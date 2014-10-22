@@ -20,7 +20,8 @@ public class GLSSolver implements ISolver {
     population.add(localSearch(population.get(t), f));
     // population.add(population.get(0));
     int num = f.numClausesSatisfied(population.get(t));
-    while (num < (f.clauseCount())) {
+    int numClauses = f.clauseCount();
+    while (num < numClauses) {
       t++;
       while (f.numClausesSatisfied(population.get(t)) > f
           .numClausesSatisfied(population.get(t - 1))) {
@@ -41,15 +42,18 @@ public class GLSSolver implements ISolver {
 
   public Assignment localSearch(Assignment a, Formula f) {
     int improve = 1;
+    int num = f.numClausesSatisfied(a);
+    int temp = 0;
     while (improve > 0) {
       improve = 0;
-      int i = 1;
+      int i = 0;
       while (i < a.values.length - 1) {
-        int num = f.numClausesSatisfied(a);
         a.values[i] = !a.values[i];
-        int gain = f.numClausesSatisfied(a) - num;
+        temp = f.numClausesSatisfied(a);
+        int gain = temp - num;
         if (gain >= 0) {
           // do nothing (keep flip)
+          num = temp;
           improve += gain;
         } else {
           // flip back
@@ -59,36 +63,5 @@ public class GLSSolver implements ISolver {
       }
     }
     return a;
-  }
-
-  /**
-   * Generate successive solutions recursively in a depth-first manner
-   * 
-   * @param f
-   * @param a
-   * @param bitPosition
-   * @return
-   */
-  private boolean solve(Formula f, Assignment a, int bitPosition) {
-    if (bitPosition > f.maxLiteral()) {
-      return false;
-    }
-    // Try one option
-    a.values[bitPosition] = false;
-    if (f.isSatisfied(a)) {
-      return true;
-    }
-    if (solve(f, a, bitPosition + 1)) {
-      return true;
-    }
-    // Try the other option
-    a.values[bitPosition] = true;
-    if (f.isSatisfied(a)) {
-      return true;
-    }
-    if (solve(f, a, bitPosition + 1)) {
-      return true;
-    }
-    return false; // no solution here
   }
 }
