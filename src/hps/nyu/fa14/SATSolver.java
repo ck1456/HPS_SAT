@@ -8,14 +8,15 @@ import java.io.IOException;
 import solver.DPLLSolver;
 import solver.GLSSolver;
 import solver.ISolver;
+import solver.TimedSolver;
 
 public class SATSolver {
 
   static Assignment solve(Formula f) {
     long start = System.currentTimeMillis();
+    
     // TODO: Implement something much smarter here
     ISolver solver = new DPLLSolver(); // Best for Problem 1 or (0)
-    // ISolver solver = new GLSSolver();
     if (f.maxLiteral() > 34) {
       // Problems of type 2 or 3
       solver = // new RandomSolver();
@@ -23,7 +24,9 @@ public class SATSolver {
       // new DPLLSolver(); // Best for Problem 1
       new GLSSolver(); // Best for Problem 3
     }
-    Assignment a = solver.solve(f);
+    ISolver timedSolver = new TimedSolver(solver, 10);
+    
+    Assignment a = timedSolver.solve(f);
     long elapsed = System.currentTimeMillis() - start;
     System.out
         .println(String.format("Time to Solve: %2.2f ", elapsed / 1000.0));

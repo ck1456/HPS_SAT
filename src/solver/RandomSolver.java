@@ -3,7 +3,7 @@ package solver;
 import hps.nyu.fa14.Assignment;
 import hps.nyu.fa14.Formula;
 
-public class RandomSolver implements ISolver {
+public class RandomSolver extends AbstractSolver {
 
   @Override
   public Assignment solve(Formula f) {

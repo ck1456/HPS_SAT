@@ -18,7 +18,7 @@ import java.util.Set;
  * @author ck1456@nyu.edu
  * 
  */
-public class DPLLSolver implements ISolver {
+public class DPLLSolver extends AbstractSolver {
 
 	@Override
 	public Assignment solve(Formula f) {

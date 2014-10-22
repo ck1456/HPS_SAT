@@ -17,7 +17,7 @@ import java.util.Random;
  * @author ck1456@nyu.edu
  * 
  */
-public class EvolutionarySolver implements ISolver {
+public class EvolutionarySolver extends AbstractSolver {
 
 	private static final int TARGET_POPULATION = 30;
 	private static int iterations = 1000;
