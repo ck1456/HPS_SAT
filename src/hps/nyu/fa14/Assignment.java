@@ -18,7 +18,7 @@ public class Assignment {
     values = new boolean[literalCount + 1];
   }
 
-  public Assignment clone(Assignment a) {
+  public static Assignment clone(Assignment a) {
     Assignment b = new Assignment(a.values.length - 1);
     for (int i = 1; i < a.values.length; i++) {
       b.values[i] = a.values[i];

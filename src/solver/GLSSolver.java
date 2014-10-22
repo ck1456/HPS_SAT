@@ -64,6 +64,8 @@ public class GLSSolver extends AbstractSolver {
     int t = 0;
     int improvement = f.numClausesSatisfied(population.get(0));
     int numGenerationsWithoutImprov = 0;
+    int globalBest = 0;
+    Assignment globalBestSolution = Assignment.random(f.maxLiteral());
     while (t < generations) {
       // select parents
       t++;
@@ -80,6 +82,12 @@ public class GLSSolver extends AbstractSolver {
         b = localSearch2(b, f);
         populations.get(t).add(b);
         // System.out.println(f.numClausesSatisfied(b));
+      }
+      Assignment best = getBest(populations.get(t - 1), f);
+      int bestResult = f.numClausesSatisfied(best);
+      if (globalBest < bestResult) {
+        globalBest = bestResult;
+        globalBestSolution = Assignment.clone(best);
       }
     }
     Assignment best = getBest(populations.get(t - 1), f);
