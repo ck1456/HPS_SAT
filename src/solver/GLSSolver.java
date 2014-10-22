@@ -9,10 +9,12 @@ import java.util.Random;
 
 public class GLSSolver implements ISolver {
 
-  int populationSize = 10;
+  int populationSize = 50;
   int generations = 50;
   double mutationProb = 0.9;
   double flipProb = 0.5;
+  int maxRestarts = 10;
+  int numGenerationsBeforeRestart = 3;
   private Random rand = new Random();
 
   @Override
@@ -38,7 +40,44 @@ public class GLSSolver implements ISolver {
             populations.get(t - 1).get(parents[1]));
         // mutate after recombination
         b = mutate(b);
-        b = localSearch(b, f);
+        b = localSearch2(b, f);
+        populations.get(t).add(b);
+        // System.out.println(f.numClausesSatisfied(b));
+      }
+    }
+    Assignment best = getBest(populations.get(t - 1), f);
+    int bestResult = f.numClausesSatisfied(best);
+    System.out.println("Best Result: " + bestResult * 1.0 / f.clauseCount());
+    return best;
+  }
+
+  public Assignment solve2(Formula f) {
+
+    List<List<Assignment>> populations = new ArrayList<List<Assignment>>();
+    List<Assignment> population = new ArrayList<Assignment>();
+    for (int i = 0; i < populationSize; i++) {
+      Assignment a = Assignment.random(f.maxLiteral());
+      population.add(a);
+    }
+    populations.add(population);
+
+    int t = 0;
+    int improvement = f.numClausesSatisfied(population.get(0));
+    int numGenerationsWithoutImprov = 0;
+    while (t < generations) {
+      // select parents
+      t++;
+      Assignment bestNewGen = getBest(population, f);
+      int[] parents = getParents(populations.get(t - 1), f);
+      populations.add(new ArrayList<Assignment>());
+      while (populations.get(t).size() < populations.get(t - 1).size()) {
+        // parents selected
+        // recombine parents
+        Assignment b = combineParents(populations.get(t - 1).get(parents[0]),
+            populations.get(t - 1).get(parents[1]));
+        // mutate after recombination
+        b = mutate(b);
+        b = localSearch2(b, f);
         populations.get(t).add(b);
         // System.out.println(f.numClausesSatisfied(b));
       }
@@ -136,6 +175,36 @@ public class GLSSolver implements ISolver {
         }
         i++;
       }
+    }
+    return a;
+  }
+
+  public Assignment localSearch2(Assignment b, Formula f) {
+    int gain = 1;
+    Assignment a = new Assignment(f.maxLiteral());
+    for (int j = 1; j < b.values.length; j++) {
+      a.values[j] = b.values[j];
+    }
+    int num = f.numClausesSatisfied(a);
+    int temp = 0;
+    int maxGainIndex = 0;
+    while (gain > 0) {
+      gain = 0;
+      num = f.numClausesSatisfied(a);
+      int maxGain = gain;
+      int i = 1;
+      while (i < a.values.length) {
+        a.values[i] = !a.values[i];
+        temp = f.numClausesSatisfied(a);
+        gain = temp - num;
+        if (maxGain < gain) {
+          maxGain = gain;
+          maxGainIndex = i;
+        }
+        a.values[i] = !a.values[i];
+        i++;
+      }
+      a.values[maxGainIndex] = !a.values[maxGainIndex];
     }
     return a;
   }
