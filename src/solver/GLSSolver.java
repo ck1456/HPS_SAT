@@ -9,28 +9,23 @@ import java.util.Random;
 
 public class GLSSolver implements ISolver {
 
-  int populationSize = 50;
+  int populationSize = 10;
   int generations = 50;
   double mutationProb = 0.9;
   double flipProb = 0.5;
+  private Random rand = new Random();
 
   @Override
   public Assignment solve(Formula f) {
     List<List<Assignment>> populations = new ArrayList<List<Assignment>>();
     List<Assignment> population = new ArrayList<Assignment>();
     for (int i = 0; i < populationSize; i++) {
-      Assignment a = new Assignment(f.maxLiteral());
+      Assignment a = Assignment.random(f.maxLiteral());
       population.add(a);
     }
     populations.add(population);
 
     int t = 0;
-    // System.out.println(f.numClausesSatisfied(population.get(0)));
-    // population.add(localSearch(population.get(t), f));
-    // population.add(population.get(0));
-    // int num = f.numClausesSatisfied(population.get(1));
-    // System.out.println(num);
-    // int iterations = 0;
     while (t < generations) {
       // select parents
       t++;
@@ -48,7 +43,10 @@ public class GLSSolver implements ISolver {
         // System.out.println(f.numClausesSatisfied(b));
       }
     }
-    return getBest(populations.get(t - 1), f);
+    Assignment best = getBest(populations.get(t - 1), f);
+    int bestResult = f.numClausesSatisfied(best);
+    System.out.println("Best Result: " + bestResult * 1.0 / f.clauseCount());
+    return best;
   }
 
   private Assignment getBest(List<Assignment> population, Formula f) {
@@ -67,9 +65,8 @@ public class GLSSolver implements ISolver {
   }
 
   private Assignment mutate(Assignment b) {
-    Random rand = new Random();
     Assignment a = new Assignment(b.values.length - 1);
-    for (int i = 0; i < a.values.length; i++) {
+    for (int i = 1; i < a.values.length; i++) {
       int n = rand.nextInt(100);
       if (n < mutationProb * 100) {
         // mutate with prob = flipProb
@@ -86,8 +83,7 @@ public class GLSSolver implements ISolver {
   private Assignment combineParents(Assignment parent1, Assignment parent2) {
     int size = parent1.values.length;
     Assignment a = new Assignment(size - 1);
-    Random rand = new Random();
-    for (int i = 0; i < size; i++) {
+    for (int i = 1; i < size; i++) {
       if (rand.nextBoolean()) {
         a.values[i] = parent1.values[i];
       } else {
@@ -125,8 +121,8 @@ public class GLSSolver implements ISolver {
     int temp = 0;
     while (improve > 0) {
       improve = 0;
-      int i = 0;
-      while (i < a.values.length - 1) {
+      int i = 1;
+      while (i < a.values.length) {
         a.values[i] = !a.values[i];
         temp = f.numClausesSatisfied(a);
         int gain = temp - num;

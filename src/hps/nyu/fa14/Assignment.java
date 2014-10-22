@@ -18,6 +18,14 @@ public class Assignment {
     values = new boolean[literalCount + 1];
   }
 
+  public Assignment clone(Assignment a) {
+    Assignment b = new Assignment(a.values.length - 1);
+    for (int i = 1; i < a.values.length; i++) {
+      b.values[i] = a.values[i];
+    }
+    return b;
+  }
+
   private static final Random RAND = new Random();
 
   public static Assignment random(int literalCount) {

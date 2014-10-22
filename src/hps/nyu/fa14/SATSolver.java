@@ -15,6 +15,7 @@ public class SATSolver {
     long start = System.currentTimeMillis();
     // TODO: Implement something much smarter here
     ISolver solver = new DPLLSolver(); // Best for Problem 1 or (0)
+    // ISolver solver = new GLSSolver();
     if (f.maxLiteral() > 34) {
       // Problems of type 2 or 3
       solver = // new RandomSolver();
