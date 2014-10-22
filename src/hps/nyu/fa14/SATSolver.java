@@ -5,20 +5,27 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import solver.DPLLSolver;
 import solver.EvolutionarySolver;
 import solver.ISolver;
 
 public class SATSolver {
 
 	static Assignment solve(Formula f) {
+		long start = System.currentTimeMillis();
 		// TODO: Implement something much smarter here
-		ISolver solver = 
-				//new RandomSolver();
-				//new BruteForceSolver(); 	// Works for Problem 0
-				//new DPLLSolver();  		// Best for Problem 1
-				new EvolutionarySolver();	// Best for Problem 3
-
-		return solver.solve(f);
+		ISolver solver = new DPLLSolver();  // Best for Problem 1 or (0)
+		if(f.maxLiteral() > 34){
+			// Problems of type 2 or 3
+			solver = 	//new RandomSolver();
+						//new BruteForceSolver(); 	// Works for Problem 0
+						//new DPLLSolver();  		// Best for Problem 1
+					new EvolutionarySolver();	// Best for Problem 3
+		}
+		Assignment a = solver.solve(f);
+		long elapsed = System.currentTimeMillis() - start;
+		System.out.println(String.format("Time to Solve: %2.2f ", elapsed / 1000.0));
+		return a;
 	}
 
 	public static void main(String[] args) throws FileNotFoundException,
