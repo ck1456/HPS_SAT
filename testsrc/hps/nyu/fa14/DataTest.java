@@ -1,12 +1,12 @@
 package hps.nyu.fa14;
 
 import static org.junit.Assert.assertTrue;
+import hps.nyu.fa14.solver.BruteForceSolver;
+import hps.nyu.fa14.solver.ISolver;
 
 import org.junit.Ignore;
 import org.junit.Test;
 
-import solver.BruteForceSolver;
-import solver.ISolver;
 
 public class DataTest {
 

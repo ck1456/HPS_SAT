@@ -1,12 +1,12 @@
 package hps.nyu.fa14;
 
 import static org.junit.Assert.*;
+import hps.nyu.fa14.solver.DPLLSolver;
+import hps.nyu.fa14.solver.ISolver;
 
 import org.junit.Ignore;
 import org.junit.Test;
 
-import solver.DPLLSolver;
-import solver.ISolver;
 
 public class DPLLSolverTest {
 

@@ -1,11 +1,11 @@
 package hps.nyu.fa14;
 
 import static org.junit.Assert.assertTrue;
+import hps.nyu.fa14.solver.EvolutionarySolver;
+import hps.nyu.fa14.solver.ISolver;
 
 import org.junit.Test;
 
-import solver.EvolutionarySolver;
-import solver.ISolver;
 
 public class EvolutionarySolverTest {
 

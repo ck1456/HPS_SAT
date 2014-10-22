@@ -1,4 +1,4 @@
-package solver;
+package hps.nyu.fa14.solver;
 
 import hps.nyu.fa14.Assignment;
 import hps.nyu.fa14.Formula;
@@ -72,9 +72,10 @@ public class EvolutionarySolver extends AbstractSolver {
 			}
 			// update global assignment if appropriate
 			boolean globalBest = updateGlobalBestAssignment();
-			//if(globalBest){
-			//	System.out.println("New Global Best " + globalBestFitness + "/" + f.clauseCount());
-			//}
+			if(globalBest){
+				notifyNewAssignment(globalBestAssignment);
+				//System.out.println("New Global Best " + globalBestFitness + "/" + f.clauseCount());
+			}
 			bestAssignment = null;
 			bestFitness = 0;
 		}
