@@ -1,14 +1,15 @@
 package hps.nyu.fa14;
 
+import hps.nyu.fa14.solver.DPLLSolver;
+import hps.nyu.fa14.solver.GLSSolver;
+import hps.nyu.fa14.solver.ISolver;
+import hps.nyu.fa14.solver.TimedSolver;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import solver.DPLLSolver;
-import solver.GLSSolver;
-import solver.ISolver;
-import solver.TimedSolver;
 
 public class SATSolver {
 

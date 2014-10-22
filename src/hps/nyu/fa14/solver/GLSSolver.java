@@ -1,4 +1,4 @@
-package solver;
+package hps.nyu.fa14.solver;
 
 import hps.nyu.fa14.Assignment;
 import hps.nyu.fa14.Formula;

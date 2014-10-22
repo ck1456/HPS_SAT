@@ -2,12 +2,12 @@ package hps.nyu.fa14;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
+import hps.nyu.fa14.solver.EvolutionarySolver;
+import hps.nyu.fa14.solver.ISolver;
+import hps.nyu.fa14.solver.TimedSolver;
 
 import org.junit.Test;
 
-import solver.EvolutionarySolver;
-import solver.ISolver;
-import solver.TimedSolver;
 
 public class TimedSolverTest {
 
