@@ -5,5 +5,5 @@ import hps.nyu.fa14.Formula;
 
 public interface ISolver {
 
-	Assignment solve(Formula f);
+  Assignment solve(Formula f);
 }
