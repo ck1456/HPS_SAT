@@ -15,6 +15,7 @@ public class GLSSolver extends AbstractSolver {
   double flipProb = 0.5;
   int maxRestarts = 10;
   int numGenerationsBeforeRestart = 3;
+  int numOfgenerationsWithoutImprov = 0;
   private Random rand = new Random();
 
   @Override
@@ -26,7 +27,8 @@ public class GLSSolver extends AbstractSolver {
       population.add(a);
     }
     populations.add(population);
-
+    int globalResult = 0;
+    Assignment globalBest = Assignment.random(f.literalCount());
     int t = 0;
     while (t < generations) {
       // select parents
@@ -40,9 +42,16 @@ public class GLSSolver extends AbstractSolver {
             populations.get(t - 1).get(parents[1]));
         // mutate after recombination
         b = mutate(b);
-        b = localSearch2(b, f);
+        b = localSearch(b, f);
         populations.get(t).add(b);
         // System.out.println(f.numClausesSatisfied(b));
+      }
+      Assignment best = getBest(populations.get(t - 1), f);
+      int bestResult = f.numClausesSatisfied(best);
+      if (globalResult < bestResult) {
+        globalBest = Assignment.clone(best);
+        notifyNewAssignment(globalBest);
+        globalResult = bestResult;
       }
     }
     Assignment best = getBest(populations.get(t - 1), f);
@@ -64,6 +73,7 @@ public class GLSSolver extends AbstractSolver {
     int t = 0;
     int improvement = f.numClausesSatisfied(population.get(0));
     int numGenerationsWithoutImprov = 0;
+    int numRestarts = 0;
     int globalBest = 0;
     Assignment globalBestSolution = Assignment.random(f.maxLiteral());
     while (t < generations) {
@@ -88,6 +98,21 @@ public class GLSSolver extends AbstractSolver {
       if (globalBest < bestResult) {
         globalBest = bestResult;
         globalBestSolution = Assignment.clone(best);
+        notifyNewAssignment(globalBestSolution);
+      } else {
+        numOfgenerationsWithoutImprov++;
+        if (numOfgenerationsWithoutImprov == numGenerationsBeforeRestart
+            && numRestarts <= maxRestarts) {
+          numGenerationsWithoutImprov = 0;
+          numRestarts++;
+          population = new ArrayList<Assignment>();
+          for (int i = 0; i < populationSize; i++) {
+            Assignment a = Assignment.random(f.maxLiteral());
+            population.add(a);
+          }
+          populations.set(0, population);
+          t = 0;
+        }
       }
     }
     Assignment best = getBest(populations.get(t - 1), f);
