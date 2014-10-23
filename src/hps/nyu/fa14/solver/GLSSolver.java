@@ -127,10 +127,10 @@ public class GLSSolver extends AbstractSolver {
         }
       }
     }
-    Assignment best = getBest(populations.get(t - 1), f);
-    int bestResult = f.numClausesSatisfied(best);
-    System.out.println("Best Result: " + bestResult * 1.0 / f.clauseCount());
-    return best;
+    // Assignment best = getBest(populations.get(t - 1), f);
+    // int bestResult = f.numClausesSatisfied(best);
+    System.out.println("Best Result: " + globalBest * 1.0 / f.clauseCount());
+    return globalBestSolution;
   }
 
   private Assignment getBest(List<Assignment> population, Formula f) {
