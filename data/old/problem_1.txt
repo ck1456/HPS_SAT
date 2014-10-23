@@ -1,1 +1,0 @@
-(x0 V x1 V x2) ^ (x3 V x4 V x5) ^ (x6 V x7 V x8) ^ (x9 V x10 V x11) ^ (x12 V x13 V x14) ^ (x15 V x16 V x17) ^ (x V x1 V x31) ^ (x30 V x1 V x31) ^ (x30 V x1 V x31) ^ (x30 V x1 V x31) ^ (x30 V x1 V x31)

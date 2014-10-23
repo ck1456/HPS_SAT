@@ -22,7 +22,7 @@ public class EvolutionarySolver extends AbstractSolver {
 	private static final int TARGET_POPULATION = 30;
 	private static int iterations = 1000;
 	private static int restarts = 500;
-	private static double MUTATION_RATE = .05;
+	private static double MUTATION_RATE = .5;
 	private static double MATE_RATE = .9;
 	private static Random RAND = new Random();
 	private static int PLATEAU_COUNT = 50;
@@ -60,8 +60,13 @@ public class EvolutionarySolver extends AbstractSolver {
 					Assignment a = getWeightedRandomAssignment(ranked);
 					if (RAND.nextDouble() < MATE_RATE) {
 						Assignment b = getWeightedRandomAssignment(ranked);
-						nextGen.addAll(mate(a, b));
+						for(Assignment c : mate(a, b)){
+							GLSSolver.localSearch(c, f);
+							nextGen.add(c);
+						}
+//						nextGen.addAll(mate(a, b));
 					}
+					GLSSolver.localSearch(a, f);
 					nextGen.add(a);
 				}
 
@@ -69,12 +74,17 @@ public class EvolutionarySolver extends AbstractSolver {
 				ranked = rankAssignments(nextGen, f);
 				population = selectNextGeneration(ranked, TARGET_POPULATION);
 
+				boolean globalBest = updateGlobalBestAssignment();
+				if(globalBest){
+					notifyNewAssignment(globalBestAssignment);
+//					System.out.println("New Global Best " + globalBestFitness + "/" + f.clauseCount());
+				}
 			}
 			// update global assignment if appropriate
 			boolean globalBest = updateGlobalBestAssignment();
 			if(globalBest){
 				notifyNewAssignment(globalBestAssignment);
-				//System.out.println("New Global Best " + globalBestFitness + "/" + f.clauseCount());
+				System.out.println("New Global Best " + globalBestFitness + "/" + f.clauseCount());
 			}
 			bestAssignment = null;
 			bestFitness = 0;

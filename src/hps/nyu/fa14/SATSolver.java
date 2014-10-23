@@ -1,7 +1,6 @@
 package hps.nyu.fa14;
 
 import hps.nyu.fa14.solver.DPLLSolver;
-import hps.nyu.fa14.solver.EvolutionarySolver;
 import hps.nyu.fa14.solver.GLSSolver;
 import hps.nyu.fa14.solver.ISolver;
 import hps.nyu.fa14.solver.TimedSolver;
@@ -21,10 +20,7 @@ public class SATSolver {
     ISolver solver = new DPLLSolver(); // Best for Problem 1 or (0)
     if (f.maxLiteral() > 34) {
       // Problems of type 2 or 3
-      solver = // new RandomSolver();
-      // new BruteForceSolver(); // Works for Problem 0
-      // new DPLLSolver(); // Best for Problem 1
-      new GLSSolver(); // Best for Problem 3
+      solver = new GLSSolver(); // Best for Problem 3
       //new EvolutionarySolver();
     }
     ISolver timedSolver = new TimedSolver(solver, 60);
@@ -60,5 +56,4 @@ public class SATSolver {
     System.out.println("java -jar SATSolver <input> <output>");
     System.exit(1);
   }
-
 }

@@ -195,7 +195,7 @@ public class GLSSolver extends AbstractSolver {
     return topTwo;
   }
 
-  public Assignment localSearch(Assignment b, Formula f) {
+  public static Assignment localSearch(Assignment b, Formula f) {
     int improve = 1;
     Assignment a = new Assignment(f.maxLiteral());
     for (int j = 1; j < b.values.length; j++) {

@@ -20,3 +20,15 @@ If necessary you can rebuild the jar file by using the included ant build script
 > ant
 
 Other Helpful Hints:
+We also supplied an automation script which can generate results for all problem sets
+and evaluate the results.  Assuming that all of the inputs are in:
+	data/prob0
+	data/prob1
+	data/prob2
+	data/prob3
+and that the evaluator program is located at:
+	spec/evaluator.jar
+
+Then you can run:
+$ test_and_score_all.sh
+This will store solutions in soln/ and output results for each test.
