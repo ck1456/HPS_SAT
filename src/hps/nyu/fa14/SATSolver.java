@@ -27,8 +27,8 @@ public class SATSolver {
     
     Assignment a = timedSolver.solve(f);
     long elapsed = System.currentTimeMillis() - start;
-    System.out
-        .println(String.format("Time to Solve: %2.2f ", elapsed / 1000.0));
+    //System.out
+    //    .println(String.format("Time to Solve: %2.2f ", elapsed / 1000.0));
     return a;
   }
 
