@@ -34,8 +34,10 @@ public class TimedSolver extends AbstractSolver implements ISolutionMonitor,
 		System.out.println();
 		}
 
-		if(!solveThread.isAlive()){
-			solveThread.interrupt();
+		if(solveThread.isAlive()){
+			// Interrupt does not do what we need (or expect) it to do, so fail
+			// solveThread.interrupt();
+			solveThread.stop();
 		}
 
 		// Wait a certain amount of time, then kill and output
