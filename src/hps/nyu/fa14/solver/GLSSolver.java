@@ -18,6 +18,13 @@ public class GLSSolver extends AbstractSolver {
   int numOfgenerationsWithoutImprov = 0;
   private Random rand = new Random();
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see hps.nyu.fa14.solver.AbstractSolver#solve(hps.nyu.fa14.Formula) solve
+   * uses localsearch exactly as given in the paper. It is a simple heuristic
+   * But seems to work for a majority of the problems.
+   */
   @Override
   public Assignment solve(Formula f) {
     List<List<Assignment>> populations = new ArrayList<List<Assignment>>();
@@ -46,7 +53,7 @@ public class GLSSolver extends AbstractSolver {
         populations.get(t).add(b);
         // System.out.println(f.numClausesSatisfied(b));
       }
-      Assignment best = getBest(populations.get(t - 1), f);
+      Assignment best = getBest(populations.get(t), f);
       int bestResult = f.numClausesSatisfied(best);
       if (globalResult < bestResult) {
         globalBest = Assignment.clone(best);
@@ -54,11 +61,16 @@ public class GLSSolver extends AbstractSolver {
         globalResult = bestResult;
       }
     }
-    Assignment best = getBest(populations.get(t - 1), f);
-    int bestResult = f.numClausesSatisfied(best);
-    System.out.println("Best Result: " + bestResult * 1.0 / f.clauseCount());
-    return best;
+    // Assignment best = getBest(populations.get(t - 1), f);
+    // int bestResult = f.numClausesSatisfied(best);
+    System.out.println("Best Result: " + globalResult * 1.0 / f.clauseCount());
+    return globalBest;
   }
+
+  /*
+   * solve2 uses localsearch2 which evaluates the highest gain possible by each
+   * bit flip before actually flipping.
+   */
 
   public Assignment solve2(Formula f) {
 
