@@ -18,6 +18,7 @@ public class TimedSolver extends AbstractSolver implements ISolutionMonitor,
 		maxSeconds = seconds;
 	}
 
+	@SuppressWarnings("deprecation") // Yes, I know stop is deprecated, but that is silly
 	@Override
 	public Assignment solve(Formula f) {
 

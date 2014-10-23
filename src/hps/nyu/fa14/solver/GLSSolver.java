@@ -9,14 +9,14 @@ import java.util.Random;
 
 public class GLSSolver extends AbstractSolver {
 
-  int populationSize = 50;
-  int generations = 50;
-  double mutationProb = 0.9;
-  double flipProb = 0.5;
-  int maxRestarts = 10;
-  int numGenerationsBeforeRestart = 3;
-  int numOfgenerationsWithoutImprov = 0;
-  private Random rand = new Random();
+  private final int populationSize = 50;
+  private final int generations = 50;
+  private final double mutationProb = 0.9;
+//  private final double flipProb = 0.5;
+//  private final int maxRestarts = 10;
+//  private final int numGenerationsBeforeRestart = 3;
+//  private final int numOfgenerationsWithoutImprov = 0;
+  private final Random rand = new Random();
 
   /*
    * (non-Javadoc)
@@ -56,14 +56,13 @@ public class GLSSolver extends AbstractSolver {
       Assignment best = getBest(populations.get(t), f);
       int bestResult = f.numClausesSatisfied(best);
       if (globalResult < bestResult) {
-        globalBest = Assignment.clone(best);
+    	// Update best found so far
+    	globalBest = Assignment.clone(best);
         notifyNewAssignment(globalBest);
         globalResult = bestResult;
       }
     }
-    // Assignment best = getBest(populations.get(t - 1), f);
-    // int bestResult = f.numClausesSatisfied(best);
-    System.out.println("Best Result: " + globalResult * 1.0 / f.clauseCount());
+    //System.out.println("Best Result: " + globalResult * 1.0 / f.clauseCount());
     return globalBest;
   }
 
@@ -71,7 +70,7 @@ public class GLSSolver extends AbstractSolver {
    * solve2 uses localsearch2 which evaluates the highest gain possible by each
    * bit flip before actually flipping.
    */
-
+  /*
   public Assignment solve2(Formula f) {
 
     List<List<Assignment>> populations = new ArrayList<List<Assignment>>();
@@ -127,12 +126,11 @@ public class GLSSolver extends AbstractSolver {
         }
       }
     }
-    // Assignment best = getBest(populations.get(t - 1), f);
-    // int bestResult = f.numClausesSatisfied(best);
-    System.out.println("Best Result: " + globalBest * 1.0 / f.clauseCount());
+//    System.out.println("Best Result: " + globalBest * 1.0 / f.clauseCount());
     return globalBestSolution;
   }
-
+*/
+  
   private Assignment getBest(List<Assignment> population, Formula f) {
     int max = -1;
     int index = 0;
@@ -179,13 +177,11 @@ public class GLSSolver extends AbstractSolver {
 
   private int[] getParents(List<Assignment> population, Formula f) {
     int max1 = -1;
-    int max2 = -1;
     int i = 0;
     int[] topTwo = new int[2];
     for (Assignment a : population) {
       int numClauses = f.numClausesSatisfied(a);
       if (max1 < numClauses) {
-        max2 = max1;
         topTwo[1] = topTwo[0];
         max1 = numClauses;
         topTwo[0] = i;
